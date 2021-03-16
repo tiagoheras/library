@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <button id="show-books" >Show Books</button>
+    <button id="show-form" >New Book</button>
+    <form>
+        <button id="close" >x</button>
+        <h2>Add a new book!</h2>
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title">
+        <label for="author">Author</label>
+        <input type="text" name="author" id="author">
+        <label for="pages">Pages</label>
+        <input type="number" name="pages" id="pages">
+        <label for="read">Read</label>
+        <select name="read" id="read">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select>
+        <button id="create-book" type="submit">Add Book</button>
+    </form>
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+body {
+text-align: center;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 30%;
+    margin: auto;
+}
+
+form {
+    position: relative;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f2f2f2;
+    max-width: 600px;
+    padding: 10px;
+    width: 20%;
+    margin: auto;
+}
+
+#close {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+
+input, select {
+    margin-bottom: 10px;
+}
