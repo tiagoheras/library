@@ -31,3 +31,15 @@ form {
 input, select {
     margin-bottom: 10px;
 }
+
+.fa-trash {
+    color: red;
+}
+
+.fa-readme {
+    color: green;
+}
+
+.fa-book {
+    color: orange;
+}

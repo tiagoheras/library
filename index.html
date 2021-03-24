@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/8f730fd2fb.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
+
 <body>
-    <button id="show-books" >Show Books</button>
-    <button id="show-form" >New Book</button>
+    <button id="show-form">New Book</button>
+    <table id="books-table">
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Pages</th>
+            <th>Read</th>
+        </tr>
+    </table>
     <form>
-        <button id="close" >x</button>
+        <button id="close">x</button>
         <h2>Add a new book!</h2>
         <label for="title">Title</label>
         <input type="text" name="title" id="title">
@@ -27,4 +37,5 @@
     </form>
     <script src="main.js"></script>
 </body>
+
 </html>
