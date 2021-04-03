@@ -1,10 +1,10 @@
-const table = document.querySelector('table');
+const grid = document.getElementById('grid');
 
 const showBooksBtn = document.getElementById('show-books');
 const showFormBtn = document.getElementById('show-form');
 const closeForm = document.getElementById('close');
 
-const form = document.querySelector('form');
+const formBackground = document.getElementById('form-background');
 
 const titleInput = document.getElementById('title');
 const authorInput = document.getElementById('author');
@@ -13,58 +13,90 @@ const readInput = document.getElementById('read');
 
 const createBookBtn = document.getElementById('create-book');
 
-let myLibrary = [{ title: 'Harry Potter', author: 'J.K Rowlling', pages: 800, read: false }, { title: 'Harry Potter', author: 'J.K Rowlling', pages: 800, read: false }];
+let myLibrary = JSON.parse(localStorage.getItem('books') || "[]");
 
 // Book constructor
-function Book(title, author, pages, read) {
+function Book(title, author, pages, read, color) {
     this.title = title
     this.author = author
     this.pages = pages
     this.read = read
+    this.color = color
 }
 
-let index = -1;
+function generateLightColorHex() {
+    let color = "#";
+    for (let i = 0; i < 3; i++)
+        color += ("0" + Math.floor(((1 + Math.random()) * Math.pow(16, 2)) / 2).toString(16)).slice(-2);
+    return color;
+}
+
+function getBooks() {
+    grid.innerHTML = '';
+    myLibrary.forEach((book, index) => {
+        const newDiv = document.createElement('div');
+        newDiv.setAttribute('data-index', index);
+        const title = document.createElement('h1');
+        title.textContent = book.title;
+        const author = document.createElement('h2')
+        author.textContent = `by ${book.author}`;
+        const pages = document.createElement('p');
+        pages.textContent = `Pages: ${book.pages}`;
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.innerHTML = '<i class="fas fa-trash fa-lg"></i>'; 
+        deleteBtn.addEventListener('click', () => deleteBook(index));
+        const toggleBtn = document.createElement('button');
+        toggleBtn.addEventListener('click', () => toggleRead(index));
+        if (book.read === true) {
+            toggleBtn.textContent = 'Unread';
+        } else {
+            toggleBtn.textContent = 'Read';
+        }
+
+        newDiv.appendChild(title)
+        newDiv.appendChild(author)
+        newDiv.appendChild(pages)
+        newDiv.appendChild(deleteBtn);
+        newDiv.appendChild(toggleBtn);
+
+        newDiv.style.backgroundColor = book.color;
+
+        grid.appendChild(newDiv)
+    })
+}
+
+
 
 // Adds book to library array
 function addBookToLibrary(title, author, pages, read) {
-    index += 1;
-    const newBook = new Book(title, author, pages, read);
-    const newTr = document.createElement('tr');
-    let readIconHTML;
-    if (newBook.read === true) {
-        readIconHTML = '<i id="toggle-read" class="fas fa-book"></i>'
-    } else {
-        readIconHTML = '<i id="toggle-read" class="fab fa-readme"></i>'
-    }
-    newTr.innerHTML = `<tr><td>${newBook.title}</td><td>${newBook.author}</td><td>${newBook.pages}</td><td>${newBook.read}</td><td>${readIconHTML}</td><td><i id="delete-book" class="fas fa-trash"></i></td></tr>`;
-    newTr.setAttribute('data-index', `${index}`)
-    table.appendChild(newTr);
-    return myLibrary.push(newBook);
+    const color = generateLightColorHex();
+    const newBook = new Book(title, author, pages, read, color);
+    myLibrary.push(newBook);
+    localStorage.setItem('books', JSON.stringify(myLibrary));
+    document.querySelector('form').reset();
+    getBooks();
 }
 
 // const toggleButtons = document.querySelectorAll("i[id='toggle-read']");
 
 function deleteBook(bookIndex) {
     myLibrary.splice(bookIndex, 1);
-    const book = document.querySelector(`tr[data-index="${bookIndex}"]`)
-    table.removeChild(book);
+    localStorage.setItem('books', JSON.stringify(myLibrary));
+    getBooks();
 }
 
 function toggleRead(bookIndex) {
-    const book = document.querySelector(`tr[data-index="${bookIndex}"]`);
+    const book = myLibrary[bookIndex];
     book.read = !book.read;
-    book.children[3].textContent = book.read;
-    // if (book.read === true) {
-    //     book.children[4].innerHTML = '<i id="toggle-read" class="fas fa-book"></i>';
-    // } else {
-    //     book.children[4].innerHTML = '<i id="toggle-read" class="fab fa-readme"></i>';
-    // }
-    console.log(book.children[3].textContent);
+    localStorage.setItem('books', JSON.stringify(myLibrary));
+    getBooks();
 }
 
+getBooks()
 
 showFormBtn.addEventListener('click', () => {
-    form.style.display = 'flex';
+    formBackground.style.display = 'flex';
 })
 
 createBookBtn.addEventListener('click', (e) => {
@@ -74,7 +106,7 @@ createBookBtn.addEventListener('click', (e) => {
         pages = Number(pagesInput.value),
         read = Boolean(pagesInput.value);
     addBookToLibrary(title, author, pages, read);
-    form.style.display = 'none';
+    formBackground.style.display = 'none';
 
     const deleteButtons = document.querySelectorAll('i[id="delete-book"]');
 
@@ -98,7 +130,7 @@ createBookBtn.addEventListener('click', (e) => {
 
 closeForm.addEventListener('click', (e) => {
     e.preventDefault();
-    form.style.display = 'none'
+    formBackground.style.display = 'none'
 })
 
 

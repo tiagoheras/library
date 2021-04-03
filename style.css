@@ -1,25 +1,73 @@
 body {
 text-align: center;
+font-family: 'Poppins';
+margin: 0;
 }
 
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    width: 30%;
-    margin: auto;
+button {
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Poppins';
+}
+
+#show-form {
+    height: 50px;
+    width: 150px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+#form-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#grid div {
+    margin: 10%;
+    border-radius: 30px;
+    box-shadow: 5px 10px 20px #c3c3c3;
 }
 
 form {
-    position: relative;
-    display: none;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #f2f2f2;
+    background-color: #ffffff;
     max-width: 600px;
-    padding: 10px;
     width: 20%;
     margin: auto;
+    border-radius: 20px;
+}
+
+.form-title {
+    background-color: rgba(255, 255, 0, 0.4);
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+}
+
+.form-content {
+    display: block;
+    margin: 10px;
+}
+
+#grid div button {
+    height: 60px;
+    width: 120px;
+    margin: 5%;
+    border-radius: 10px;
+    border: solid 1px #c3c3c3;
 }
 
 #close {
@@ -30,6 +78,23 @@ form {
 
 input, select {
     margin-bottom: 10px;
+    height: 30px;
+    width: 250px;
+    display: block;
+    border: #d6d6d6 solid 1px;
+}
+
+label {
+    font-size: 20px;
+    display: block;
+    color: #8b8b8b;
+}
+
+form button {
+    background-color: rgba(255, 255, 0, 0.4);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 15px 0;
 }
 
 .fa-trash {
