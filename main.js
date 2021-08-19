@@ -1,3 +1,5 @@
+const form = document.forms[0];
+
 const grid = document.getElementById('grid');
 
 const showBooksBtn = document.getElementById('show-books');
@@ -44,7 +46,7 @@ function getBooks() {
         pages.textContent = `Pages: ${book.pages}`;
 
         const deleteBtn = document.createElement('button');
-        deleteBtn.innerHTML = '<i class="fas fa-trash fa-lg"></i>'; 
+        deleteBtn.innerHTML = '<i class="fas fa-trash fa-lg"></i>';
         deleteBtn.addEventListener('click', () => deleteBook(index));
         const toggleBtn = document.createElement('button');
         toggleBtn.addEventListener('click', () => toggleRead(index));
@@ -65,8 +67,6 @@ function getBooks() {
         grid.appendChild(newDiv)
     })
 }
-
-
 
 // Adds book to library array
 function addBookToLibrary(title, author, pages, read) {
@@ -93,6 +93,12 @@ function toggleRead(bookIndex) {
     getBooks();
 }
 
+function showError() {
+    const span = document.querySelector('span');
+    span.innerText = "Some values are missing!";
+    span.style.color = "red";
+}
+
 getBooks()
 
 showFormBtn.addEventListener('click', () => {
@@ -101,12 +107,18 @@ showFormBtn.addEventListener('click', () => {
 
 createBookBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    const title = titleInput.value,
-        author = authorInput.value,
-        pages = Number(pagesInput.value),
-        read = Boolean(pagesInput.value);
-    addBookToLibrary(title, author, pages, read);
-    formBackground.style.display = 'none';
+
+    if (form.checkValidity()) {
+        const title = titleInput.value,
+            author = authorInput.value,
+            pages = Number(pagesInput.value),
+            read = Boolean(pagesInput.value);
+
+        addBookToLibrary(title, author, pages, read);
+        formBackground.style.display = 'none';
+    } else {
+        showError();
+    }
 
     const deleteButtons = document.querySelectorAll('i[id="delete-book"]');
 
@@ -125,7 +137,6 @@ createBookBtn.addEventListener('click', (e) => {
             toggleRead(index);
         })
     })
-
 })
 
 closeForm.addEventListener('click', (e) => {
